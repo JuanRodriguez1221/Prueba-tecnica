@@ -1,0 +1,30 @@
+{
+  "success": true,
+  "data": {
+    "total_votes": 1,
+    "total_voters_that_voted": 1,
+    "results": [
+      {
+        "candidate_id": 1,
+        "name": "Ana Torres",
+        "party": "Partido Azul",
+        "votes": 1,
+        "percentage": 100
+      },
+      {
+        "candidate_id": 2,
+        "name": "Luis Medina",
+        "party": "Movimiento Verde",
+        "votes": 0,
+        "percentage": 0
+      },
+      {
+        "candidate_id": 3,
+        "name": "Camila Rojas",
+        "party": null,
+        "votes": 0,
+        "percentage": 0
+      }
+    ]
+  }
+}

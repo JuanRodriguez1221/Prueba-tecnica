@@ -126,6 +126,12 @@ Respuesta esperada:
 }
 ```
 
+También hay un ejemplo guardado en:
+
+```text
+docs/statistics-example.json
+```
+
 Intentar votar dos veces con el mismo votante:
 
 ```bash
@@ -199,4 +205,5 @@ scripts/seed.php                 Datos iniciales
 scripts/smoke-test.php           Prueba funcional básica
 docs/openapi.yaml                Documentación Swagger/OpenAPI
 docs/postman_collection.json     Colección Postman
+docs/statistics-example.json     Ejemplo de estadísticas generadas
 ```
