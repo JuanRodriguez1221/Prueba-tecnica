@@ -1,0 +1,40 @@
+@base_url = http://localhost:8000
+
+### Health check
+GET {{base_url}}/health
+
+### Register candidate
+POST {{base_url}}/candidates
+Content-Type: application/json
+
+{
+  "name": "Ana Torres",
+  "party": "Partido Azul"
+}
+
+### Register voter
+POST {{base_url}}/voters
+Content-Type: application/json
+
+{
+  "name": "Juan Perez",
+  "email": "juan.perez@example.com"
+}
+
+### List voters
+GET {{base_url}}/voters?page=1&limit=10
+
+### List candidates
+GET {{base_url}}/candidates?page=1&limit=10
+
+### Cast vote
+POST {{base_url}}/votes
+Content-Type: application/json
+
+{
+  "voter_id": 1,
+  "candidate_id": 1
+}
+
+### Voting statistics
+GET {{base_url}}/votes/statistics

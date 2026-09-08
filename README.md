@@ -13,6 +13,9 @@ API RESTful en PHP 8.2 para gestionar votantes, candidatos, emisión única de v
 - Paginación y búsqueda en listados de votantes y candidatos.
 - Documentación OpenAPI en `docs/openapi.yaml`.
 - Colección Postman en `docs/postman_collection.json`.
+- Health check en `/health`.
+- Dockerfile y Docker Compose para ejecutar API + MySQL.
+- CI con GitHub Actions para validación de Composer y sintaxis PHP.
 
 > Nota sobre la restricción votante/candidato: el modelo solicitado no incluye documento de identidad ni email para candidatos. Por eso la API valida esta regla comparando el nombre de la persona sin distinguir mayúsculas/minúsculas.
 
@@ -22,7 +25,7 @@ API RESTful en PHP 8.2 para gestionar votantes, candidatos, emisión única de v
 - Composer.
 - Docker y Docker Compose.
 
-## Instalación
+## Instalación Local
 
 ```bash
 composer install
@@ -39,7 +42,35 @@ La API queda disponible en:
 http://localhost:8000
 ```
 
+## Instalación con Docker
+
+También puedes ejecutar la API y MySQL completamente con Docker:
+
+```bash
+docker compose up -d --build
+docker compose exec app php scripts/migrate.php
+docker compose exec app php scripts/seed.php
+```
+
+La API queda disponible en:
+
+```text
+http://localhost:8000
+```
+
+Verificar estado de API y base de datos:
+
+```bash
+curl http://localhost:8000/health
+```
+
 ## Endpoints
+
+### Sistema
+
+```http
+GET /health
+```
 
 ### Votantes
 
@@ -191,10 +222,20 @@ docs/postman_collection.json
 
 La variable `base_url` ya apunta a `http://localhost:8000`.
 
+## Cliente HTTP
+
+También se incluye un archivo para probar desde extensiones como REST Client:
+
+```text
+docs/api.http
+```
+
 ## Estructura
 
 ```text
 public/index.php                 Front controller y definición de rutas
+Dockerfile                       Imagen Docker de la API
+docker-compose.yml               Servicios de API y MySQL
 src/Config/Env.php               Carga simple de variables .env
 src/Core/Database.php            Conexión PDO
 src/Core/Router.php              Router HTTP liviano
@@ -208,4 +249,6 @@ scripts/smoke-test.php           Prueba funcional básica
 docs/openapi.yaml                Documentación Swagger/OpenAPI
 docs/postman_collection.json     Colección Postman
 docs/statistics-example.json     Ejemplo de estadísticas generadas
+docs/api.http                    Requests listos para REST Client
+.github/workflows/ci.yml         Validación automática en GitHub Actions
 ```

@@ -6,6 +6,7 @@ use VotingSystem\Config\Env;
 use VotingSystem\Controllers\CandidateController;
 use VotingSystem\Controllers\VoteController;
 use VotingSystem\Controllers\VoterController;
+use VotingSystem\Core\Database;
 use VotingSystem\Core\HttpException;
 use VotingSystem\Core\Request;
 use VotingSystem\Core\Response;
@@ -21,7 +22,23 @@ $router->add('GET', '/', static fn () => Response::json([
     'success' => true,
     'message' => 'Voting System API',
     'documentation' => '/docs/openapi.yaml',
+    'health' => '/health',
 ]));
+
+$router->add('GET', '/health', static function (): void {
+    $startedAt = microtime(true);
+    Database::connection()->query('SELECT 1')->fetchColumn();
+
+    Response::json([
+        'success' => true,
+        'status' => 'ok',
+        'services' => [
+            'api' => 'ok',
+            'database' => 'ok',
+        ],
+        'response_time_ms' => round((microtime(true) - $startedAt) * 1000, 2),
+    ]);
+});
 
 $router->add('GET', '/docs/openapi.yaml', static function (): void {
     header('Content-Type: application/yaml; charset=utf-8');

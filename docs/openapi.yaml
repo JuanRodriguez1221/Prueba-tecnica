@@ -6,6 +6,12 @@ info:
 servers:
   - url: http://localhost:8000
 paths:
+  /health:
+    get:
+      summary: Check API and database health
+      responses:
+        "200":
+          description: API and database are available
   /voters:
     post:
       summary: Register a voter
