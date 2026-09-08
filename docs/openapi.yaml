@@ -1,0 +1,177 @@
+openapi: 3.0.3
+info:
+  title: Voting System API
+  version: 1.0.0
+  description: RESTful API for voters, candidates, votes and voting statistics.
+servers:
+  - url: http://localhost:8000
+paths:
+  /voters:
+    post:
+      summary: Register a voter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required: [name, email]
+              properties:
+                name:
+                  type: string
+                  example: Juan Perez
+                email:
+                  type: string
+                  format: email
+                  example: juan.perez@example.com
+      responses:
+        "201":
+          description: Voter registered
+        "409":
+          description: Email already exists or person is already candidate
+        "422":
+          description: Validation error
+    get:
+      summary: List voters
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 15
+        - in: query
+          name: search
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Voter list
+  /voters/{id}:
+    get:
+      summary: Get a voter by id
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Voter details
+        "404":
+          description: Voter not found
+    delete:
+      summary: Delete a voter by id
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Voter deleted
+        "409":
+          description: Voter has a vote and cannot be deleted
+  /candidates:
+    post:
+      summary: Register a candidate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required: [name]
+              properties:
+                name:
+                  type: string
+                  example: Ana Torres
+                party:
+                  type: string
+                  nullable: true
+                  example: Partido Azul
+      responses:
+        "201":
+          description: Candidate registered
+        "409":
+          description: Person is already voter
+        "422":
+          description: Validation error
+    get:
+      summary: List candidates
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 15
+        - in: query
+          name: search
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Candidate list
+  /candidates/{id}:
+    get:
+      summary: Get a candidate by id
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Candidate details
+        "404":
+          description: Candidate not found
+    delete:
+      summary: Delete a candidate by id
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Candidate deleted
+        "409":
+          description: Candidate has votes and cannot be deleted
+  /votes:
+    post:
+      summary: Cast a vote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required: [voter_id, candidate_id]
+              properties:
+                voter_id:
+                  type: integer
+                  example: 1
+                candidate_id:
+                  type: integer
+                  example: 1
+      responses:
+        "201":
+          description: Vote registered
+        "404":
+          description: Voter or candidate not found
+        "409":
+          description: Voter has already voted
+    get:
+      summary: List votes
+      responses:
+        "200":
+          description: Vote list
+  /votes/statistics:
+    get:
+      summary: Get voting statistics
+      responses:
+        "200":
+          description: Voting statistics
+components:
+  parameters:
+    Id:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: integer
+      example: 1

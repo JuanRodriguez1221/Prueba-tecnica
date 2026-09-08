@@ -1,0 +1,22 @@
+{
+  "name": "technical-test/voting-system-api",
+  "description": "RESTful API in PHP for managing voters, candidates and votes.",
+  "type": "project",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.2",
+    "ext-pdo": "*",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "VotingSystem\\": "src/"
+    }
+  },
+  "scripts": {
+    "start": "php -S localhost:8000 -t public public/index.php",
+    "migrate": "php scripts/migrate.php",
+    "seed": "php scripts/seed.php",
+    "smoke-test": "php scripts/smoke-test.php"
+  }
+}

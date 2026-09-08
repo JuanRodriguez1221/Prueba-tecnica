@@ -1,0 +1,101 @@
+{
+  "info": {
+    "name": "Voting System API",
+    "description": "Collection for testing voters, candidates, votes and statistics.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/"
+      }
+    },
+    {
+      "name": "Create Candidate",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\":\"Ana Torres\",\"party\":\"Partido Azul\"}"
+        },
+        "url": "{{base_url}}/candidates"
+      }
+    },
+    {
+      "name": "List Candidates",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/candidates?page=1&limit=10"
+      }
+    },
+    {
+      "name": "Create Voter",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\":\"Juan Perez\",\"email\":\"juan.perez@example.com\"}"
+        },
+        "url": "{{base_url}}/voters"
+      }
+    },
+    {
+      "name": "List Voters",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/voters?page=1&limit=10"
+      }
+    },
+    {
+      "name": "Cast Vote",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"voter_id\":1,\"candidate_id\":1}"
+        },
+        "url": "{{base_url}}/votes"
+      }
+    },
+    {
+      "name": "List Votes",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/votes"
+      }
+    },
+    {
+      "name": "Statistics",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/votes/statistics"
+      }
+    }
+  ]
+}
