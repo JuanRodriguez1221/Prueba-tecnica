@@ -1,4 +1,4 @@
-# Voting System API
+# Sistema de Votaciones API
 
 API RESTful en PHP 8.2 para gestionar votantes, candidatos, emisión única de votos y estadísticas de resultados.
 
@@ -126,7 +126,9 @@ Respuesta esperada:
 }
 ```
 
-También hay un ejemplo guardado en:
+## Evidencia de estadísticas generadas
+
+La respuesta anterior corresponde a la evidencia solicitada de estadísticas generadas por el API. También queda guardada como archivo de apoyo en:
 
 ```text
 docs/statistics-example.json
@@ -149,7 +151,7 @@ Respuesta esperada:
 }
 ```
 
-## Validaciones implementadas
+## Validaciones Implementadas
 
 - `name` obligatorio para votantes y candidatos.
 - `email` obligatorio, válido y único para votantes.
@@ -161,7 +163,7 @@ Respuesta esperada:
 - Al votar se incrementa `candidates.votes`.
 - La tabla `votes` tiene índice único por `voter_id` como defensa adicional.
 
-## Prueba rápida
+## Prueba Rápida
 
 Con el servidor corriendo:
 
