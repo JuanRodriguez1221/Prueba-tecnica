@@ -19,6 +19,20 @@ API RESTful en PHP 8.2 para gestionar votantes, candidatos, emisión única de v
 
 > Nota sobre la restricción votante/candidato: el modelo solicitado no incluye documento de identidad ni email para candidatos. Por eso la API valida esta regla comparando el nombre de la persona sin distinguir mayúsculas/minúsculas.
 
+## Plus Implementados
+
+Además de los requisitos base de la prueba técnica, se agregaron los siguientes diferenciales para facilitar la revisión y demostrar buenas prácticas:
+
+- Ejecución completa con Docker: el proyecto puede levantar API y MySQL con `docker compose up -d --build`.
+- Endpoint `/health`: permite validar rápidamente que la API y la conexión con la base de datos están funcionando.
+- CI con GitHub Actions: valida automáticamente `composer.json` y la sintaxis de todos los archivos PHP en cada push o pull request.
+- Colección Postman: archivo `docs/postman_collection.json` listo para importar y probar los endpoints.
+- Archivo `docs/api.http`: requests listos para ejecutar desde extensiones como REST Client.
+- Documentación OpenAPI: especificación Swagger en `docs/openapi.yaml`.
+- Smoke test automatizado: `composer smoke-test` verifica creación de candidato, creación de votante, emisión de voto, rechazo de voto duplicado y estadísticas.
+- Seed idempotente: `composer seed` puede ejecutarse varias veces sin romper por datos duplicados.
+- Control de concurrencia al votar: uso de transacciones, `FOR UPDATE` y restricción única por `voter_id`.
+
 ## Requisitos
 
 - PHP 8.2 o superior.
